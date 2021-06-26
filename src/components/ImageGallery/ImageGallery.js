@@ -16,7 +16,7 @@ class ImageGallery extends Component {
         isLoading: false,
         error: null,
         showModal: false,
-        largeImageURL:''
+        largeImage: ''
     }
     componentDidUpdate(prevProps, prevState) {
         if (prevState.searchQuery !== this.state.searchQuery) {
@@ -43,11 +43,19 @@ class ImageGallery extends Component {
             .catch(error => this.setState({ error }))
             .finally(() => this.setState({ isLoading: false }));
     }
+
     toggleModal = () => {
     this.setState(({showModal}) => ({
       showModal: !showModal
     }))
-  }
+    }
+
+    showModalImage = largeImageURL => {
+        this.setState({
+            largeImage: largeImageURL,
+            showModal: true
+        })
+    }
 
     render() {
         const { hits, isLoading, error, showModal } = this.state;
@@ -60,7 +68,7 @@ class ImageGallery extends Component {
                 <ul className="ImageGallery">
                     <ImageGalleryItem
                         hits={this.state.hits}
-                        onClick={this.toggleModal}
+                        onClick={this.showModalImage}
                         />
                 </ul>
                 {isLoading && <h1>Loading...</h1>}
@@ -68,11 +76,7 @@ class ImageGallery extends Component {
                     <Button onClick={this.fetchImages} />
                 )}
                 {showModal &&
-                    <Modal onClose={this.toggleModal}>
-                    <h1>Hello</h1>
-                {/* <img src={this.largeImageURL} alt='' /> */}
-                    </Modal>}
-                <button type='button' onClick={this.toggleModal}>otk</button>
+                    <Modal onClose={this.toggleModal} img={this.state.largeImage} />}
             </div>
         )
     }

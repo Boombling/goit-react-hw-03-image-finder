@@ -4,10 +4,10 @@ import './Modal.css'
 const modalRoot = document.querySelector('#modal-root');
 class Modal extends Component {
     componentDidMount() {
-        window.addEventListener('keydown', this.hendelLeyDown)
+        window.addEventListener('keydown', this.handelLeyDown)
     }
     componentWillUnmount() {
-        window.removeEventListener('keydown', this.hendelLeyDown)
+        window.removeEventListener('keydown', this.handelLeyDown)
     }
 
     handelLeyDown = e => {
@@ -24,8 +24,7 @@ class Modal extends Component {
         return createPortal(
             <div className="Overlay" onClick={this.handelBackdropClick}>
                 <div className="Modal">
-                    {this.props.children}
-                    {/* <img src={largeImageURL} alt={tags} /> */}
+                    <img src={this.props.img} alt='' />
                 </div>
             </div>, modalRoot
         )
