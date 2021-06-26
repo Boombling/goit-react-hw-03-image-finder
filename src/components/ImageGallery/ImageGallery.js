@@ -3,6 +3,7 @@ import Searchbar from '../Searchbar/Searchbar';
 import fetchImage from '../services/image-api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import './ImageGallery.css';
+import Button from '../Button/Button';
 
 
 
@@ -49,17 +50,13 @@ class ImageGallery extends Component {
 
                 <Searchbar onSubmit={this.onChangeQuery}/>
                 <ul className="ImageGallery">
-                    {hits.map(({id, webformatURL, tags}) => (
                     <ImageGalleryItem
-                        key={id}
-                        webformatURL={webformatURL}
-                        tags={tags}
+                        hits={this.state.hits}
                         />
-                ))}
-                        </ul>
+                </ul>
                 {isLoading && <h1>Loading...</h1>}
                 {loadMoreButton && (
-                    <button type='button' onClick={this.fetchImages}>Load more</button>
+                    <Button onClick={this.fetchImages} />
                 )}
             </div>
         )

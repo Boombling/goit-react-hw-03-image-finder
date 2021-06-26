@@ -8,7 +8,7 @@ const fetchImage = ({
     pageSize = 12
 }) => {
     return axios
-        .get(`https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}&image_type=photo$page=${currentPage}&per_page=${pageSize}`)
+        .get(`https://pixabay.com/api/?key=${API_KEY}&q=${searchQuery}&image_type=phot&page=${currentPage}&per_page=${pageSize}`)
         .then((response) => response.data.hits);
 };
 
