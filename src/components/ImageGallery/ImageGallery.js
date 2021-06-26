@@ -4,6 +4,7 @@ import fetchImage from '../services/image-api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import './ImageGallery.css';
 import Button from '../Button/Button';
+import Modal from '../Modal/Modal'
 
 
 
@@ -13,7 +14,9 @@ class ImageGallery extends Component {
         currentPage: 1,
         searchQuery: '',
         isLoading: false,
-        error: null
+        error: null,
+        showModal: false,
+        largeImageURL:''
     }
     componentDidUpdate(prevProps, prevState) {
         if (prevState.searchQuery !== this.state.searchQuery) {
@@ -40,9 +43,14 @@ class ImageGallery extends Component {
             .catch(error => this.setState({ error }))
             .finally(() => this.setState({ isLoading: false }));
     }
+    toggleModal = () => {
+    this.setState(({showModal}) => ({
+      showModal: !showModal
+    }))
+  }
 
     render() {
-        const { hits, isLoading, error } = this.state;
+        const { hits, isLoading, error, showModal } = this.state;
         const loadMoreButton = hits.length > 0 && !isLoading;
         return (
             <div>
@@ -52,12 +60,19 @@ class ImageGallery extends Component {
                 <ul className="ImageGallery">
                     <ImageGalleryItem
                         hits={this.state.hits}
+                        onClick={this.toggleModal}
                         />
                 </ul>
                 {isLoading && <h1>Loading...</h1>}
                 {loadMoreButton && (
                     <Button onClick={this.fetchImages} />
                 )}
+                {showModal &&
+                    <Modal onClose={this.toggleModal}>
+                    <h1>Hello</h1>
+                {/* <img src={this.largeImageURL} alt='' /> */}
+                    </Modal>}
+                <button type='button' onClick={this.toggleModal}>otk</button>
             </div>
         )
     }
