@@ -4,7 +4,8 @@ import fetchImage from '../services/image-api';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 import './ImageGallery.css';
 import Button from '../Button/Button';
-import Modal from '../Modal/Modal'
+import Modal from '../Modal/Modal';
+import Loaders from "../Loaders";
 
 
 
@@ -37,11 +38,13 @@ class ImageGallery extends Component {
         fetchImage(options).then((hits) => {
             this.setState((prevState) => ({
                 hits: [...prevState.hits, ...hits],
-                currentPage: prevState.currentPage + 1,
+                currentPage: prevState.currentPage + 1,  
             }));
+            this.smoothTransition()
         })
             .catch(error => this.setState({ error }))
-            .finally(() => this.setState({ isLoading: false }));
+            .finally(() => this.setState({ isLoading: false }))
+        
     }
 
     toggleModal = () => {
@@ -54,6 +57,13 @@ class ImageGallery extends Component {
         this.setState({
             largeImage: largeImageURL,
             showModal: true
+        })
+    }
+
+    smoothTransition = () => {
+        window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth',
         })
     }
 
@@ -71,10 +81,12 @@ class ImageGallery extends Component {
                         onClick={this.showModalImage}
                         />
                 </ul>
-                {isLoading && <h1>Loading...</h1>}
+                <div>
                 {loadMoreButton && (
                     <Button onClick={this.fetchImages} />
-                )}
+                    )}
+                {isLoading && <Loaders/>}
+                </div>
                 {showModal &&
                     <Modal onClose={this.toggleModal} img={this.state.largeImage} />}
             </div>
