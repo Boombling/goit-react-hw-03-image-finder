@@ -81,7 +81,7 @@ class ImageGallery extends Component {
                         onClick={this.showModalImage}
                         />
                 </ul>
-                <div>
+                <div className="ButtonLoader">
                 {loadMoreButton && (
                     <Button onClick={this.fetchImages} />
                     )}

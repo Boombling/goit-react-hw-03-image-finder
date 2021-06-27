@@ -10,3 +10,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+.ButtonLoader {
+  display: flex;
+  justify-content: center;
+}
